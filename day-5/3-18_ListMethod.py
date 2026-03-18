@@ -1,0 +1,13 @@
+list=[44,12,88,5,33,88,7]
+list.append(99)
+print(list)
+list.insert(2,0)
+print(list)
+list.remove(88)
+print(list)
+list.sort()
+print(list)
+list.pop()
+print(list)
+print(list.count(88))
+print(list.index(33))
