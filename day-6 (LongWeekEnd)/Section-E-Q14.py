@@ -16,7 +16,24 @@ print(min(t)) # Output: __10_
 # Give 2 other real-world examples where you'd use a tuple
 # instead of a list:
 # Example 1:
+
+STATUS_CHOICES = (
+    ('P', 'Pending'),
+    ('C', 'Completed'),
+    ('F', 'Failed'),
+)
+
+Why tuple?
+Because these values are fixed constants. If someone accidentally modifies them at runtime, your database logic breaks. Tuple prevents that.
+
 # Example 2:
+
+ALLOWED_HOSTS = ('localhost', '127.0.0.1')
+These are configuration constants. You don’t want some random part of your code doing:
+
 # Q4. Convert this list to a tuple, then try to change the first element.
 # What error do you get?
 nums = [1, 2, 3, 4, 5]
+print(tuple(nums))
+nums.insert(1,6)
+print(nums)
