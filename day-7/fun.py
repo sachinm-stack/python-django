@@ -42,3 +42,10 @@ def add(*args):
 print(add(1,2,3))
 print(add(1,2,30,40,50))
 
+
+def info(**kwargs):
+    print(type(kwargs))
+    print(kwargs)
+    print(kwargs["name"])
+    print(kwargs["age"])
+info(name="kumar",age=12)
