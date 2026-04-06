@@ -1,0 +1,22 @@
+2  Connecting to GitHub — Push & Pull    —  Easy
+Push your local hello.py repository to GitHub. Follow these steps and tick each one when done.
+
+☐	Step 1: Create a new public repository on github.com named 'git-practice'. Do NOT check the README box.
+☐	Step 2: Copy the repository link (HTTPS).
+☐	Step 3: In your terminal (inside your git-practice folder) run:
+           git remote add origin <your-github-link>
+☐	Step 4: Run:  git push -u origin main
+           What happened on GitHub? Write it here: ____________git push -u origin main___________________
+☐	Step 5: Edit hello.py — add one more print statement. Save.
+☐	Step 6: Run:  git add .  →  git commit -m "Added second print"  →  git push
+☐	Step 7: Go to GitHub and confirm the new commit appears in your repository.
+
+Write the command to check what remote is connected to your local repo:
+_______________________________________________
+What does -u in git push -u origin main mean? (Explain in your words):
+_______________________________________________
+_______________________________________________
+
+💡 Hint: After git remote add origin <url>, that URL is now called 'origin'. The -u flag sets the upstream so next time you just need to run git push instead of git push origin main.
+
+

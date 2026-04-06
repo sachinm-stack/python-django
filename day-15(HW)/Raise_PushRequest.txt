@@ -1,0 +1,12 @@
+
+☐	Step 1: Make sure your git-practice repo is on GitHub (pushed from Tasks 1 & 2).
+☐	Step 2: Create a new branch locally: git branch pr-demo  →  git checkout pr-demo
+☐	Step 3: Create a file goodbye.py with print('Goodbye from PR branch!')
+☐	Step 4: Stage, commit, and push this branch: git push origin pr-demo
+☐	Step 5: Go to GitHub → your repo. Click 'Compare & pull request' (banner appears).
+☐	Step 6: Source: pr-demo  →  Target: main. Add a title and description. Click 'Create Pull Request'.
+☐	Step 7: Merge the PR yourself (since you're the owner). Click 'Merge pull request'.
+☐	Step 8: Go back to terminal. Switch to main and pull:
+           git checkout main  →  git pull
+☐	Step 9: Confirm goodbye.py is now in your main branch locally.
+

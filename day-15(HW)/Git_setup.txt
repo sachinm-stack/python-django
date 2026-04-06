@@ -1,0 +1,92 @@
+# Step 1: Create a new folder called git-practice
+# Open terminal inside that folder
+
+# Step 2: Check if it's a git repo
+git status
+# Write output here: fatal: not a git repository (or any of the parent directories): .git
+
+# Step 3: Initialize git
+git init
+
+# Step 4: Check status again
+git status
+
+# Write what changed:  
+On branch master
+No commits yet
+nothing to commit (create/copy files and use "git add"to track)
+
+
+# Step 5: Create a file called hello.py
+# Write: print('Hello Git!')
+
+# Step 6: Check status — what letter does the file show?
+git status
+# Letter: ___  What does it mean?
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+    hello.py
+
+# Step 7: Stage the file
+git add .
+# Now check status — what letter shows? ___
+
+Changes to be committed:
+    new file:   hello.py
+
+# Step 8: Commit
+git commit -m "First commit: hello.py"
+
+[master (root-commit) abc1234] First commit: hello.py
+ 1 file changed, 1 insertion(+)
+ create mode 100644 hello.py
+
+# Step 9: View your commit history
+git log
+
+commit abc1234...
+Author: Your Name <your@email.com>
+Date:   ...
+
+    First commit: hello.py
+
+
+
+
+
+
+
+
+Q1. What happens when you run git status before git init?
+
+It throws an error:
+
+fatal: not a git repository
+
+👉 Meaning:
+Git cannot track anything because the folder is not initialized.
+
+Q2. What does U, A, M mean?
+U (Untracked)
+→ File exists but Git is not tracking it
+A (Added)
+→ File is staged and ready for commit
+M (Modified)
+→ File was already committed before, but now changed
+
+👉 When does M appear?
+
+After you edit a file that was already committed
+Then run git status
+Q3. Git workflow in 3 steps
+
+If you don’t understand this, you don’t understand Git. Period.
+
+Create / Modify files
+→ working directory
+Stage changes (git add)
+→ tell Git what to include
+Commit (git commit)
+→ save snapshot permanently

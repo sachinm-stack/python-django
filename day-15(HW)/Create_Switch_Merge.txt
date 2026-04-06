@@ -1,0 +1,34 @@
+# Start from your git-practice repo
+
+# Step 1: Create a new branch called 'feature-greet'
+git branch feature-greet
+
+# Step 2: Switch to that branch
+git checkout feature-greet
+# Confirm: what does git branch show? Which has * ?
+# Answer: _________________________________________________
+
+# Step 3: Create a new file greet.py
+# Write:
+#   def greet(name):
+#       print(f'Hello, {name}! Welcome to Git.')
+#   greet('World')
+
+# Step 4: Stage and commit in this branch
+git add .
+git commit -m "Added greet function in feature-greet branch"
+
+# Step 5: Switch back to main
+git checkout main
+# Does greet.py appear in main? (Yes / No) : ___
+# Why? ________________________________________________
+
+# Step 6: Merge feature-greet into main
+git merge feature-greet
+# Does greet.py appear now? (Yes / No) : ___
+
+# Step 7: Delete the branch (job is done)
+git branch -d feature-greet
+
+# Step 8: Push the merged main to GitHub
+git push

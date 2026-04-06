@@ -1,0 +1,19 @@
+This is a practical Git/GitHub task — not a coding task. Complete these steps and screenshot each one.
+
+•	Step 1: Create a GitHub account at github.com (if you don't have one already).
+•	Step 2: Create a new public repository named 'python-class'. Tick the 'Add README.md' checkbox before creating.
+•	Step 3: Install Git on your laptop from git-scm.com. Verify: open a terminal and run git --version.
+•	Step 4: Create a folder on your laptop called python_practice. Inside it, create a file day1.py with a simple print('Hello Git') statement.
+•	Step 5: Open terminal in that folder and run these commands in order:
+
+git init
+git add .
+git commit -m 'First commit: add day1.py'
+git remote add origin https://github.com/YOUR_USERNAME/python-class.git
+git push -u origin main
+
+•	Step 6: Go to your GitHub repo page and confirm day1.py is visible online.
+•	Step 7: Make a change to day1.py (add another print statement), then do: git add . → git commit -m 'Update day1' → git push. Confirm the update appears on GitHub.
+
+Hint: If git push throws an error about authentication, GitHub requires a Personal Access Token (PAT) instead of a password. Go to GitHub → Settings → Developer Settings → Personal Access Tokens → Generate new token. Use that token as your password when Git asks.
+

@@ -1,0 +1,16 @@
+# Situation: You are in folder 'my-project'
+# It already has git initialized and one commit.
+# You have two branches: main, feature
+
+git checkout main
+echo 'line 1' > notes.txt
+git add .
+git commit -m "main: added notes.txt"
+
+git branch feature
+git checkout feature
+echo 'line 2 from feature' >> notes.txt
+git add .
+git commit -m "feature: added line 2"
+
+git checkout main
