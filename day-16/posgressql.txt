@@ -1,0 +1,230 @@
+Python Programming — 6th April
+Homework Assignment
+PostgreSQL  ·  SQL vs NoSQL  ·  Tables  ·  Relationships  ·  Cascade Delete
+Name: ______________________________________________	Submit before next class
+
+CORE TASKS — Complete all 5
+
+
+1  SQL vs NoSQL — Fill in the Blanks + Matching    —  Easy
+Part A: Fill in the correct word (SQL / NoSQL) for each statement.
+
+1. Banking applications that need strict rules and table relationships use _____sql_____ database.
+2. Chat applications where messages can have different fields use ____no sql______ database.
+3. ___sql_______ has a fixed table structure — once defined, all rows must follow it.
+4. _____no sql_____ is loose and flexible — different rows can have different fields.
+5. PostgreSQL and MySQL are examples of _____sql_____ databases.
+6. MongoDB is an example of a ____no sql______ database.
+7. Table-to-table JOINs and foreign keys exist only in ____sql______.
+8. Amazon's product catalog (where phones have different specs than books) would use _____no sql_____.
+
+Part B: Match the concept on the left to its correct description on the right.
+
+Concept	Description
+Class (OOP) → Answer: ___	A. Individual record in a table
+Object (OOP) → Answer: ___	B. The fields of a table
+Attribute (OOP) → Answer: ___	C. The table itself (blueprint)
+Row (Database) → Answer: ___	D. Unique ID of a table row
+Column (Database) → Answer: ___	E. An instance / one row
+Primary Key → Answer: ___	F. What columns the table has
+
+💡 Hint: SQL = strict, structured, table relationships (banking). NoSQL = flexible, no fixed structure (chat, catalogs). Class = Table, Object = Row, Attribute = Column. Primary Key is always unique and not null.
+
+
+
+2  PostgreSQL Setup — Install & Connect    —  Easy
+Complete the following steps and write the output of each command.
+
+☐	Step 1: Install PostgreSQL from postgresql.org if not already done. Set a password during installation — write it down somewhere safe.
+☐	Step 2: Open CMD (or terminal). Type:  psql -U postgres
+           Write the output you see: _______________________________
+☐	Step 3: List all databases by typing:  \l
+           How many databases do you see by default? ___
+☐	Step 4: Create a new database:  CREATE DATABASE mytest;
+           (Don't forget the semicolo!)
+           Write what PostgreSQL prints after: _______________________________
+☐	Step 5: Connect to your new database:  \c mytest
+           Write the output: _______________________________
+☐	Step 6: List tables:  \dt
+           What does it say (since no tables exist yet)? _______
+☐	Step 7: Open PgAdmin. Navigate to Servers → PostgreSQL → Databases.
+           Can you see 'mytest' there? (Yes/No): ___
+
+Answer these questions:
+Q1. What is the difference between the PostgreSQL USER and the DATABASE?
+_______________________________________________
+_______________________________________________
+Q2. If psql is not recognised in CMD, what do you need to do? (Explain the PATH fix)
+_______________________________________________
+_______________________________________________
+💡 Hint: By default, the user is 'postgres'. The database does NOT have a password — the USER does. The password was set during installation. If psql not found: add PostgreSQL's bin folder to System PATH environment variable.
+
+
+
+3  Create Tables with Constraints    —  Medium
+Using psql or PgAdmin Query Tool, create the following two tables. Fill in the blanks in the SQL below, then run it.
+
+-- Step 1: Connect to your mytest database
+\c mytest
+
+-- Step 2: Create a users table
+CREATE TABLE users (
+    id       INTEGER GENERATED ALWAYS AS IDENTITY _________ KEY,
+    name     VARCHAR(100) NOT _____,
+    email    VARCHAR(150) NOT NULL ________,
+    password VARCHAR(255) NOT NULL,
+    role     VARCHAR(10)  DEFAULT '_______'
+);
+
+-- Step 3: Create a test table linked to users
+CREATE TABLE test (
+    id            INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    title         VARCHAR(200) NOT NULL,
+    created_by_id INTEGER NOT NULL,
+    is_published  ________ DEFAULT false,
+    CONSTRAINT fk_test_user
+        ________ KEY (created_by_id)
+        REFERENCES ________(id)
+        ON DELETE CASCADE
+);
+
+Answer after running:
+Q1. What does GENERATED ALWAYS AS IDENTITY do to the id column?
+_______________________________________________
+_______________________________________________
+Q2. What constraint makes sure no two users have the same email?
+_______________________________________________
+Q3. In the test table, what column connects it to the users table?
+_______________________________________________
+Q4. What happens to the test rows if a user is deleted? Why?
+_______________________________________________
+_______________________________________________
+💡 Hint: Fill in: PRIMARY, NULL, UNIQUE, 'student', BOOLEAN, FOREIGN, users. IDENTITY auto-increments IDs (1,2,3...). ON DELETE CASCADE means child rows are deleted when parent is deleted.
+
+
+
+4  Table Relationships — Design + Explain    —  Medium
+Part A: For each pair of tables below, write the relationship type (1:1, 1:Many, or Many:Many) and justify your answer.
+
+Table Pair	Relationship Type	Reason
+Person ↔ Passport	___________	1-1___________________________
+Customer ↔ Orders	___________	_1-M__________________________
+Test ↔ Questions	___________	___1-M________________________
+Question ↔ Options	___________	__1-M_________________________
+Student ↔ Tests taken	___________1-M	___________________________
+Employee ↔ Department	___________M-1	___________________________
+
+Part B: Design your own table. Imagine you are building a Library system. List the tables you would need, the key columns in each, and the relationships between them.
+
+Tables needed:
+_______________________________________________
+_______________________________________________
+Relationships (with type):
+_______________________________________________
+_______________________________________________
+_______________________________________________
+
+💡 Hint: To decide relationship type, ask: 'Can one X have multiple Y? Can one Y have multiple X?' Person:Passport = 1:1. Customer:Orders = 1:Many. For Library: think Books, Members, Loans/Borrow table.
+
+
+
+5  Cascade Delete — Trace and Verify    —  Challenge
+Read each scenario and write the expected outcome WITHOUT running the code first. Then verify by running it.
+
+Setup — Run this SQL to create and fill 3 connected tables:
+
+CREATE TABLE authors (
+    id   INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE books (
+    id        INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    title     VARCHAR(200) NOT NULL,
+    author_id INTEGER NOT NULL,
+    CONSTRAINT fk_books_author
+        FOREIGN KEY (author_id)
+        REFERENCES authors(id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE reviews (
+    id      INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    content TEXT NOT NULL,
+    book_id INTEGER NOT NULL,
+    CONSTRAINT fk_reviews_book
+        FOREIGN KEY (book_id)
+        REFERENCES books(id)
+        ON DELETE SET NULL   -- different from CASCADE!
+);
+
+-- Insert data
+INSERT INTO authors (name) VALUES ('Author One'), ('Author Two');
+INSERT INTO books (title, author_id) VALUES ('Book A', 1), ('Book B', 1), ('Book C', 2);
+INSERT INTO reviews (content, book_id) VALUES ('Great!', 1), ('Okay', 2);
+
+Answer BEFORE running (predict the result):
+
+Q1. SELECT * FROM books; — How many rows do you expect?
+_______________________________________________
+Q2. You run:  DELETE FROM authors WHERE id = 1;
+     How many books remain after this?  Expected: ___
+     Why? _______________________________________________
+_______________________________________________
+Q3. After deleting Author One's books (because of cascade), what happens to the reviews for Book A and Book B?
+     The reviews are ON DELETE SET NULL. What will book_id become for those reviews?
+_______________________________________________
+_______________________________________________
+Q4. Now delete Author Two. What happens to Book C?
+_______________________________________________
+Q5. Rewrite the CREATE TABLE books statement replacing ON DELETE CASCADE with ON DELETE PROTECT. What would happen when you try DELETE FROM authors WHERE id = 2 (while Book C still exists)?
+_______________________________________________
+_______________________________________________
+
+Reflection:
+Q6. Why must you be very careful with ON DELETE CASCADE in a production database?
+_______________________________________________
+_______________________________________________
+
+💡 Hint: CASCADE: delete parent → all children delete too. SET NULL: delete parent → child's FK column becomes NULL (child row still exists). PROTECT: you CANNOT delete parent while children exist. ON DELETE CASCADE in books means delete Author 1 → Book A, B vanish. SET NULL on reviews means reviews survive but book_id becomes NULL.
+
+
+
+
+BONUS — Optional Challenge
+
+B  Design the Full Test Platform Database    —  Optional
+Based on the class discussion, design the full database for the Online Test Platform. Create all 5 tables with proper constraints, data types, and foreign keys.
+
+The 5 tables:
+•	users  (id, name, email, password, role)
+•	test  (id, title, created_by_id FK → users, is_published)
+•	questions  (id, text, test_id FK → test)
+•	options  (id, option_text, is_correct, question_id FK → questions)
+•	submission  (id, submitted_at, user_id FK → users, test_id FK → test)
+
+Step 1: Create a database called 'testplatform' and connect to it.
+Step 2: Write and run the CREATE TABLE statements for all 5 tables. Use ON DELETE CASCADE for all foreign keys.
+Step 3: Insert at least one row in each table (user, test, question, option, submission).
+Step 4: Run SELECT * FROM each table to verify your data is there.
+Step 5: Delete the test row and verify cascade — do questions, options, and submission disappear?
+
+Write what you observed after Step 5:
+_______________________________________________
+_______________________________________________
+_______________________________________________
+Questions answered by this design:
+Q1. How does the system know who created a test?
+_______________________________________________
+Q2. How does the system know which options belong to which question?
+_______________________________________________
+Q3. How does the submission table record both which student and which test?
+_______________________________________________
+_______________________________________________
+
+💡 Hint: submission has TWO foreign keys: user_id and test_id. That is fine — a table can have multiple foreign keys connecting to different tables. Use the TIMESTAMP data type for submitted_at and the NOW() function to fill it automatically. For is_correct use BOOLEAN (true/false, not 0/1).
+
+
+
+
+Python Programming — 6th April  ·  PostgreSQL  ·  SQL  ·  Tables  ·  Relationships  ·  Cascade Delete

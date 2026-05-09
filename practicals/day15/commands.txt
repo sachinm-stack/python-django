@@ -1,0 +1,6 @@
+psql -U postgres
+\l          -- list databases
+\c testproject -- connect
+\dt         -- list tables
+\d users    -- describe table
+CREATE DATABASE testproject;
